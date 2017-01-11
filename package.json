@@ -1,0 +1,55 @@
+{
+  "name": "cloud-player-native",
+  "version": "1.0.0",
+  "description": "Native Cloud-Player for Soundcloud tracks",
+  "main": "./src/main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron ./src/main.js",
+
+    "clean": "rm -rf ./dist",
+    "clean:osx": "rm -rf ./dist/bundle/native/osx",
+    "clean:win": "rm -rf ./dist/bundle/native/win",
+
+    "package:osx": "npm run clean:osx && electron-packager . Cloud-Player --out=./dist/osx --platform=darwin --arch=x64 --icon=icons/cloud-player.icns --overwrite",
+    "package:win": "npm run clean:win && electron-packager . Cloud-Player --out=./dist/win --platform=win32 --arch=ia32 --icon=icons/cloud-player.ico --overwrite",
+    "package:all": "npm run package:osx && npm run package:win"
+  },
+  "keywords": [
+    "Soundcloud"
+  ],
+  "contributors": [
+    "Alexander Zarges <alex.zarges@online.de> (http://zarg.es/)",
+    "Daniel Reißner <mail@danielreissner.com (http://danielreissner.com)",
+    "Kai Schulz <mail@kaischulz.com> (http://kaischulz.com)"
+  ],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/mit-license.php"
+    }
+  ],
+  "dependencies": {
+    "angular": "1.4.8",
+    "backbone": "1.2.3",
+    "lokijs": "1.3.10",
+    "underscore": "1.8.3",
+    "angular-route": "1.4.8",
+    "cheerio": "0.19.0",
+    "q": "1.4.1",
+    "request": "2.67.0",
+    "winston": "2.1.1"
+  },
+  "devDependencies": {
+    "electron-prebuilt": "^1.4.13",
+    "electron-packager": "8.5.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zarlex/cloud-player-native.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zarlex/cloud-player-native/issues"
+  },
+  "homepage": "https://github.com/atom/electron-quick-start#readme"
+}

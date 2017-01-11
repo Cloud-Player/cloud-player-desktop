@@ -1,0 +1,70 @@
+const electron = require('electron');
+const Window = require('../window');
+const WindowsProperties = require("../collections/windows_properties_collection");
+const WindowProperties = require("../models/window_properties_model");
+
+var PortalWindow = Window.extend({
+  showDevTools: false,
+  url: 'https://zarlex.github.io/cloud-player',
+  id: 'portal',
+  windowEventBeforeOpen:'dom-ready',
+  options: {
+    minWidth: 996,
+    minHeight: 500,
+    show: false,
+    titleBarStyle: 'hidden',
+    webPreferences: {
+      nodeIntegration: false,
+      webSecurity: false,
+      preload: __dirname + '/preload.js'
+    }
+  },
+  initialize: function () {
+    var windowsProperties = new WindowsProperties(),
+      size = electron.screen.getPrimaryDisplay().workAreaSize,
+      windowProperties;
+
+    this.window.setContentSize(size.width, size.height);
+
+    windowsProperties.find({name: 'portal'}).then(function (collection) {
+      if (collection.length === 0) {
+        windowProperties = new WindowProperties({name: 'portal'});
+      } else {
+        windowProperties = collection.first();
+        var size = windowProperties.get('size'),
+          position = windowProperties.get('position');
+
+        this.window.setContentSize(size.width, size.height);
+        this.window.setPosition(position.x, position.y);
+      }
+    }.bind(this));
+
+    this.on('close', function () {
+      if (windowProperties) {
+        windowProperties.set('size', {
+          width: this.window.getContentSize()[0],
+          height: this.window.getContentSize()[1]
+        });
+        windowProperties.set('position', {
+          x: this.window.getPosition()[0],
+          y: this.window.getPosition()[1]
+        });
+        windowProperties.save();
+      }
+    }.bind(this));
+
+    this.on('MediaPlayPause',function(){
+      this.window.webContents.executeJavaScript('window.dispatchEvent(new Event("playPauseTrackKeyPressed"))');
+    }, this);
+
+    this.on('MediaNextTrack',function(){
+      this.window.webContents.executeJavaScript('window.dispatchEvent(new Event("nextTrackKeyPressed"))');
+    }, this);
+
+    this.on('MediaPreviousTrack',function(){
+      this.window.webContents.executeJavaScript('window.dispatchEvent(new Event("previousTrackKeyPressed"))');
+    }, this);
+  }
+});
+
+module.exports = PortalWindow;
