@@ -5,12 +5,11 @@ env:
   global:
   - GH_REF=github.com/Zarlex/cloud-player-native
   - secure: oyOsV5iQPnnLimhzZJgTPvYJBEfySS2YlWWiP0dv7+nrB0zO5g4yEhKagfurqtds91Rw5pJU9Je8oKjQFlliMOCir6DbtCZ9X9cupXWGRUwEFIF/1js/2XFDeXj/AapMAB47ZFTCMSzNlqej9/w4KesroFO+QaJkXcghtiaC5KQbr3zOj9bycSVdemx0gbmaVn3HMasCWQPx1L8cw1iGXiwQcmbRwcd3BrqgOEy1oXL1a9/j/sDO3G4SpZcqiN0806BXz7ZW6SwgVd+RGKGUcApXxyGI2Gs9qEo82DuciF5/m7iIJH/GYw27NkuObduL1it8jpvrYdiwhlNdg7v1RMGi00w6/UIgHGkqQ1c0Mt2jgcrBAGPKBtsmchZxFFHdeJIO5ar2ZPIAZ13YmY3VsQnJANRNTn9gDsvYTGqJ0qCQdA9TlTe5F/Ubdi2bxCCxrl+10u2Uhr39kwCTrgcuTqtFzCMM7Dm97VwB8Yy/YtUCA7HhSVo/cTV5EP86ODOhLdI+z2qEcPEeWURVheR0SCrdk5tArDhzfL/fyPZuzVmZ4+9q4uh2sVhT0wIY2c2RCd+zvmdtvsx61PFjiL/tJzuYa/jFvMBEQ3zy2i6KrEpdOxSQ/tNm5Sdkpjezw1565kL5Q/Yul63WoR69ltLLc72BrsJdg8wdOBte6hdRZwE=
-before_install:
+before_deploy:
 - npm install -g electron-packager
 - sudo add-apt-repository ppa:ubuntu-wine/ppa -y
 - sudo apt-get update -q
 - sudo apt-get install -y wine1.7
-before_deploy:
 - npm run package:all
 - zip -r dist/osx/Cloud-Player-darwin-x64/Cloud-Player.app.zip dist/osx/Cloud-Player-darwin-x64/Cloud-Player.app
 deploy:
@@ -20,5 +19,6 @@ deploy:
     file:
       - dist/osx/Cloud-Player-darwin-x64/Cloud-Player.zip
       - dist/win/Cloud-Player-win32-ia32/Cloud-Player.exe
+    skip_cleanup: true 
     on: 
       tags: true
