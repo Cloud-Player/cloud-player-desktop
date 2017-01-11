@@ -13,11 +13,6 @@ before_install:
 before_deploy:
 - npm run package:all
 deploy:
-  - provider: script
-    script: ./bin/github_pages_release.sh
-    skip_cleanup: true 
-    on: 
-      branch: master
   - provider: releases
     api_key:
       secure: fmcKME3VDFxdqOOkGYwt9NOAgk65T4/sfbjP3TA7THDsED/tio0BPiSz1VD8HRNv0JYuce+K7byL0HSkeJ10/PmN9p5r1IT+uou4zbMCgZHX4qeNDT5R54MJCWkkaVJITH1UbpmA9u2ND2GP+xBCb5hBz/UIsBsFfUdtwsK+3rn2U/6OUlwGWK0Q949k0prVQbVAJIp5Qqeu2ofba3heeozgoewbW+hhUqhs2rBWVR+Vd1XQKrNOd84eP/ZFu24BZrOZbkBp4w8wQVKLqjUr5JFyqQUskgccRao89TztGFNrMkeKFzvkIuwiWbwzGPYr8kyA/CcfvQo+rZejKuzE7VWgKdKIvNtecGbIs/yFh/jvRL+W7eFfduszTwusb6jX8QFR9Cd9xe+CoeEgfvGetGCHYMD3sfxETH8ashkANnTcLoI4Allg7oENwLgbfJIKpcb4+PmjyYhjbj6FGzbW75DJib5Y4R+8NJizuuLYLPjx/PB1mjhY8GY0vfuME9S9aYwbzaWeR+0cPjJznebwmqfpjCyXZTOam9Y8vHbJiGW0+GGSDciLGSNuh0BVR3/JjutH5x/jbGxhWda4R2tfF+ajrO5wvYGvCXy25P7RV/e2rAGPpPASjF6fGJlPeTxoTgK7dDbqDs0qjkgHvIE3j50HXu8O9LoljFK2oV7zGE0=
