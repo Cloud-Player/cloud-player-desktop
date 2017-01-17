@@ -11,7 +11,8 @@ before_deploy:
 - sudo apt-get update -q
 - sudo apt-get install -y wine1.7
 - npm run package:all
-- zip -r dist/osx/Cloud-Player-darwin-x64/Cloud-Player.app.zip dist/osx/Cloud-Player-darwin-x64/Cloud-Player.app
+- cd dist/osx/Cloud-Player-darwin-x64
+- zip -r Cloud-Player.app.zip Cloud-Player.app
 deploy:
   - provider: releases
     api_key:
