@@ -1,5 +1,6 @@
 const electron = require('electron');
 const Window = require('../window');
+const ConnectWindow = require('../connect/connect');
 const WindowsProperties = require("../collections/windows_properties_collection");
 const WindowProperties = require("../models/window_properties_model");
 
@@ -7,7 +8,7 @@ var PortalWindow = Window.extend({
   showDevTools: false,
   url: 'https://zarlex.github.io/cloud-player',
   id: 'portal',
-  windowEventBeforeOpen:'dom-ready',
+  windowEventBeforeOpen: 'dom-ready',
   options: {
     minWidth: 996,
     minHeight: 500,
@@ -15,9 +16,12 @@ var PortalWindow = Window.extend({
     titleBarStyle: 'hidden',
     webPreferences: {
       nodeIntegration: false,
-      webSecurity: false,
-      preload: __dirname + '/preload.js'
+      webSecurity: false
     }
+  },
+  showScConnectWindow: function (url) {
+    this._connectionWindow = new ConnectWindow({url: url});
+    this._connectionWindow.open();
   },
   initialize: function () {
     var windowsProperties = new WindowsProperties(),
@@ -53,15 +57,21 @@ var PortalWindow = Window.extend({
       }
     }.bind(this));
 
-    this.on('MediaPlayPause',function(){
+    this.window.webContents.on('new-window', function (event, location) {
+      if (location.match(/.*soundcloud.com\/connect.*/)) {
+        this.showScConnectWindow(location);
+      }
+    }.bind(this));
+
+    this.on('MediaPlayPause', function () {
       this.window.webContents.executeJavaScript('window.dispatchEvent(new Event("playPauseTrackKeyPressed"))');
     }, this);
 
-    this.on('MediaNextTrack',function(){
+    this.on('MediaNextTrack', function () {
       this.window.webContents.executeJavaScript('window.dispatchEvent(new Event("nextTrackKeyPressed"))');
     }, this);
 
-    this.on('MediaPreviousTrack',function(){
+    this.on('MediaPreviousTrack', function () {
       this.window.webContents.executeJavaScript('window.dispatchEvent(new Event("previousTrackKeyPressed"))');
     }, this);
   }
