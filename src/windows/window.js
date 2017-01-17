@@ -4,14 +4,18 @@ const _ = require('underscore');
 const Backbone = require('backbone');
 const Q = require('q');
 
-var Window = function () {
+var Window = function (options) {
+  options = options || {};
+  if (options.url) {
+    this.url = options.url;
+  }
   if (!this.url) {
     throw new Error('Url has to be specified. Set the url to specify the content the window should load');
   }
   if (!this.id) {
     throw new Error('Id has to be specified');
   }
-  if(this.initOnCreation){
+  if (this.initOnCreation) {
     this._prepare.apply(this, arguments);
   }
 };
@@ -27,8 +31,8 @@ _.extend(Window.prototype, Backbone.Events, {
   _initialized: false,
   _windowOpenedAt: null,
   _canBeOpened: true,
-  _initBeforeOpeneEventHandler: function(){
-    if(this.windowEventBeforeOpen){
+  _initBeforeOpeneEventHandler: function () {
+    if (this.windowEventBeforeOpen) {
       this._canBeOpened = false;
       this.window.webContents.on(this.windowEventBeforeOpen, function () {
         this._canBeOpened = true;
@@ -81,7 +85,7 @@ _.extend(Window.prototype, Backbone.Events, {
       delete this.window;
     });
 
-    this._initBeforeOpeneEventHandler.apply(this,arguments);
+    this._initBeforeOpeneEventHandler.apply(this, arguments);
     this._initMinCloseHandler.apply(this, arguments);
     this.initialize.apply(this, arguments);
     this._initialized = true;
@@ -94,10 +98,10 @@ _.extend(Window.prototype, Backbone.Events, {
   isOpened: function () {
     return this._isOpened;
   },
-  beforeShow: function(){
+  beforeShow: function () {
     var dfd = Q.defer();
     this.trigger('open');
-    if(!this._canBeOpened){
+    if (!this._canBeOpened) {
       console.log('BEFORE SHOW WAIT', this.id)
       this.window.webContents.on(this.windowEventBeforeOpen, function () {
         dfd.resolve.apply(this);
@@ -124,8 +128,8 @@ _.extend(Window.prototype, Backbone.Events, {
       return dfd.promise;
     }
 
-    if(opts.reinitialize){
-      this.close().then(function(){
+    if (opts.reinitialize) {
+      this.close().then(function () {
         this.open.apply(this);
       }.bind(this));
       return dfd.promise;
@@ -138,7 +142,7 @@ _.extend(Window.prototype, Backbone.Events, {
       return dfd.promise;
     }
 
-    this.beforeShow().then(function(){
+    this.beforeShow().then(function () {
       console.log('SHOW', this.id)
       this.window.show();
       this._windowOpenedAt = +new Date();
