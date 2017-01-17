@@ -19,5 +19,5 @@ angular.module('Splash', ['lokiAngular'])
       ipc.send('show-portal');
     };
 
-    $timeout(showPortal, 200);
+    showPortal();
   });

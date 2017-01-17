@@ -1,7 +1,7 @@
 const Window = require('../window');
 
 var SplashWindow = Window.extend({
-  minDisplayTime: 2500,
+  minDisplayTime: 1000,
   showDevTools: false,
   url: 'file://' + __dirname + '/web/window.html',
   id: 'splash',
