@@ -1,9 +1,3 @@
-### Angular 2
-
-# TypeScript
-**/*.js
-**/*.js.map
-
 # Project Exceptions
 !gulpfile.js
 !systemjs.config*.js
