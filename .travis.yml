@@ -3,8 +3,8 @@ node_js:
 - '5.6'
 env:
   global:
-  - GH_REF=github.com/Zarlex/cloud-player-native
-  - secure: oyOsV5iQPnnLimhzZJgTPvYJBEfySS2YlWWiP0dv7+nrB0zO5g4yEhKagfurqtds91Rw5pJU9Je8oKjQFlliMOCir6DbtCZ9X9cupXWGRUwEFIF/1js/2XFDeXj/AapMAB47ZFTCMSzNlqej9/w4KesroFO+QaJkXcghtiaC5KQbr3zOj9bycSVdemx0gbmaVn3HMasCWQPx1L8cw1iGXiwQcmbRwcd3BrqgOEy1oXL1a9/j/sDO3G4SpZcqiN0806BXz7ZW6SwgVd+RGKGUcApXxyGI2Gs9qEo82DuciF5/m7iIJH/GYw27NkuObduL1it8jpvrYdiwhlNdg7v1RMGi00w6/UIgHGkqQ1c0Mt2jgcrBAGPKBtsmchZxFFHdeJIO5ar2ZPIAZ13YmY3VsQnJANRNTn9gDsvYTGqJ0qCQdA9TlTe5F/Ubdi2bxCCxrl+10u2Uhr39kwCTrgcuTqtFzCMM7Dm97VwB8Yy/YtUCA7HhSVo/cTV5EP86ODOhLdI+z2qEcPEeWURVheR0SCrdk5tArDhzfL/fyPZuzVmZ4+9q4uh2sVhT0wIY2c2RCd+zvmdtvsx61PFjiL/tJzuYa/jFvMBEQ3zy2i6KrEpdOxSQ/tNm5Sdkpjezw1565kL5Q/Yul63WoR69ltLLc72BrsJdg8wdOBte6hdRZwE=
+  - GH_REF=github.com/Cloud-Player/desktop-app
+  - secure: npFPi1qA9fvvMyWyx1UY5NVp2gyaB+DZDDJj2Rc5QnCSuHFYYsX1Aj2xmVz+EWXlJoNyMnnx42sSdtrd+FGpx3p2QXINgVfs3fJtKTiimTJIzKtaNJpn1p58fPjlhHU+FnTM9pWKUkITRUs3EiR9Bo4AUVYvCPnGNmaQysBVwShbXHeLRC/qa4vaA+PPyrY4U+ovY9wksupmsHSPRYejyKjwXtSQKK6b46CPVfPdJnqnycWW5i5Y5DV4Gjw6XjNVRtYIE1h9ukDIM4KSQ6yN3e2FsTdCNMSnpUj9oPai9Kfb0T1igoOnOvyXr83nOVSUwDaq3CyFkRRg71Vxx39jHx+dVkYJpxvKkniix9JAPXYoF7jwMAsNiDt67kCQuS95pKCAZfcuU10mSZEBvp5dyzmUElj+exA3xxHG5ovBUEmK+LiXI2eurVwftJTGP3h3b+uz06wpUer05H9rp96aja5wAtgrFDfT2d/AUUoCBtWK4YKs82tOhWpY/Dtg06LYLD11ucB9E0OMFQkVTOBBS47it08LROsde58rKJh06g8Oco7hUd8WZ7oxfoirZHv7bqi2Z6yaYpu+kyHDyA9iwsnHgiQyrBIM4L7DuSrj/uh/0yty7Dk8y6uioKM3DOU0zs05HJCd24T7bMLqLEDZ2VUuUAqO1ETQGM2mR6nhPRA=
 before_deploy:
 - npm install -g electron-packager
 - sudo add-apt-repository ppa:ubuntu-wine/ppa -y
@@ -14,12 +14,12 @@ before_deploy:
 - cd ./dist/osx && zip -r Cloud-Player.osx.zip Cloud-Player-darwin-x64 && cd ../..
 - cd ./dist/win && zip -r Cloud-Player.win.zip Cloud-Player-win32-ia32 && cd ../..
 deploy:
-  - provider: releases
-    api_key:
-      secure: fmcKME3VDFxdqOOkGYwt9NOAgk65T4/sfbjP3TA7THDsED/tio0BPiSz1VD8HRNv0JYuce+K7byL0HSkeJ10/PmN9p5r1IT+uou4zbMCgZHX4qeNDT5R54MJCWkkaVJITH1UbpmA9u2ND2GP+xBCb5hBz/UIsBsFfUdtwsK+3rn2U/6OUlwGWK0Q949k0prVQbVAJIp5Qqeu2ofba3heeozgoewbW+hhUqhs2rBWVR+Vd1XQKrNOd84eP/ZFu24BZrOZbkBp4w8wQVKLqjUr5JFyqQUskgccRao89TztGFNrMkeKFzvkIuwiWbwzGPYr8kyA/CcfvQo+rZejKuzE7VWgKdKIvNtecGbIs/yFh/jvRL+W7eFfduszTwusb6jX8QFR9Cd9xe+CoeEgfvGetGCHYMD3sfxETH8ashkANnTcLoI4Allg7oENwLgbfJIKpcb4+PmjyYhjbj6FGzbW75DJib5Y4R+8NJizuuLYLPjx/PB1mjhY8GY0vfuME9S9aYwbzaWeR+0cPjJznebwmqfpjCyXZTOam9Y8vHbJiGW0+GGSDciLGSNuh0BVR3/JjutH5x/jbGxhWda4R2tfF+ajrO5wvYGvCXy25P7RV/e2rAGPpPASjF6fGJlPeTxoTgK7dDbqDs0qjkgHvIE3j50HXu8O9LoljFK2oV7zGE0=
-    file:
-      - dist/osx/Cloud-Player.osx.zip
-      - dist/win/Cloud-Player.win.zip
-    skip_cleanup: true 
-    on: 
-      tags: true
+  provider: releases
+  api_key:
+    secure: 46EdYugb+jFGunvRjUxDlODEYvi3VG/P1PgzZwVpUocFDVDkm/8hUp+u31pfEakuo2sI6Jxlzl2JNxhvk0O/fhoDoHgxSNLjL2dChNHMT9OYi+vTrAgFLDdpZ1UHeiLgqfUuh6+P+R+b2Mv14sgSbmF1gvoI5eTQeoR1J3xfA/poZduuyxbdttdm0WD465or9iFaxQpm6aIK3+0H4rN/P083LqPdN1CCBOmz/GuKiCvJe5WXQnvvZNPl2H4eK7+LK89YenFtOUyDjC9Hy0Kr6njVG+T/BSXw1lfMymtJu97lUVWnUAkoExrb/3bnO5DCYbill5kUqAKvia8XfnWthlmaX32Aii6+pGASu+27BlVBDehA61GQeZTVpCIYMgOA89QY77j74rLk8FOjwticNJrSGk0E4WXccsLBTB1tApULP+0bHeFTNl8AadnLAtU5IhL4c7FOeQNHi6o5F3NPR2tLLagSn+/Y2fLt4kzBrNv3vWFG9gV77sAjYlaTOSqFjSaPRz0ay4wOJQziZBe7xvz93OmaPeMPpRSLRdk7PupGE+V0EXrK0cs4+8fN/rDuuWhSZ2MBEJgc+Ue9AiHJ0FW7b5klAY0LknoNzY64alf68E3EpxiR7JZqrR1hcqtXuu19OFa1F4+Aw/vhXf6ep9Z57ho5GZDfrUO/KYEz2bI=
+  file:
+    - dist/osx/Cloud-Player.osx.zip
+    - dist/win/Cloud-Player.win.zip
+  skip_cleanup: true 
+  on:
+    tags: true
