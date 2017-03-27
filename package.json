@@ -11,8 +11,8 @@
     "clean:osx": "rm -rf ./dist/bundle/native/osx",
     "clean:win": "rm -rf ./dist/bundle/native/win",
 
-    "package:osx": "npm run clean:osx && electron-packager . Cloud-Player --out=./dist/osx --platform=darwin --arch=x64 --icon=icons/cloud-player.icns --overwrite",
-    "package:win": "npm run clean:win && electron-packager . Cloud-Player --out=./dist/win --platform=win32 --arch=ia32 --icon=icons/cloud-player.ico --overwrite",
+    "package:osx": "npm run clean:osx && electron-packager . Cloud-Player --out=./dist/osx --platform=darwin --arch=x64 --icon=icons/cloud-player.icns --ignore=dist --overwrite",
+    "package:win": "npm run clean:win && electron-packager . Cloud-Player --out=./dist/win --platform=win32 --arch=ia32 --icon=icons/cloud-player.ico --ignore=dist --overwrite",
     "package:all": "npm run package:osx && npm run package:win"
   },
   "keywords": [
