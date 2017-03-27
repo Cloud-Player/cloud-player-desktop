@@ -6,17 +6,18 @@ const WindowProperties = require("../models/window_properties_model");
 
 var PortalWindow = Window.extend({
   showDevTools: false,
-  url: 'https://cloud-player.github.io/web',
+  url: 'https://cloud-player.io',
   id: 'portal',
   windowEventBeforeOpen: 'dom-ready',
   options: {
-    minWidth: 996,
-    minHeight: 500,
+    minWidth: 320,
+    minHeight: 100,
     show: false,
     titleBarStyle: 'hidden',
     webPreferences: {
       nodeIntegration: false,
-      webSecurity: false
+      webSecurity: false,
+      preload: __dirname + '/preload.js'
     }
   },
   showScConnectWindow: function (url) {
