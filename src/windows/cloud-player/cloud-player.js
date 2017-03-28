@@ -6,12 +6,12 @@ const WindowProperties = require("../models/window_properties_model");
 
 var PortalWindow = Window.extend({
   showDevTools: false,
-  url: 'https://cloud-player.io',
+  url: 'http://cloud-player.io',
   id: 'portal',
   windowEventBeforeOpen: 'dom-ready',
   options: {
-    minWidth: 320,
-    minHeight: 100,
+    minWidth: 400,
+    minHeight: 200,
     show: false,
     titleBarStyle: 'hidden',
     webPreferences: {
