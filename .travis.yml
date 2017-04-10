@@ -7,7 +7,10 @@ env:
   - secure: npFPi1qA9fvvMyWyx1UY5NVp2gyaB+DZDDJj2Rc5QnCSuHFYYsX1Aj2xmVz+EWXlJoNyMnnx42sSdtrd+FGpx3p2QXINgVfs3fJtKTiimTJIzKtaNJpn1p58fPjlhHU+FnTM9pWKUkITRUs3EiR9Bo4AUVYvCPnGNmaQysBVwShbXHeLRC/qa4vaA+PPyrY4U+ovY9wksupmsHSPRYejyKjwXtSQKK6b46CPVfPdJnqnycWW5i5Y5DV4Gjw6XjNVRtYIE1h9ukDIM4KSQ6yN3e2FsTdCNMSnpUj9oPai9Kfb0T1igoOnOvyXr83nOVSUwDaq3CyFkRRg71Vxx39jHx+dVkYJpxvKkniix9JAPXYoF7jwMAsNiDt67kCQuS95pKCAZfcuU10mSZEBvp5dyzmUElj+exA3xxHG5ovBUEmK+LiXI2eurVwftJTGP3h3b+uz06wpUer05H9rp96aja5wAtgrFDfT2d/AUUoCBtWK4YKs82tOhWpY/Dtg06LYLD11ucB9E0OMFQkVTOBBS47it08LROsde58rKJh06g8Oco7hUd8WZ7oxfoirZHv7bqi2Z6yaYpu+kyHDyA9iwsnHgiQyrBIM4L7DuSrj/uh/0yty7Dk8y6uioKM3DOU0zs05HJCd24T7bMLqLEDZ2VUuUAqO1ETQGM2mR6nhPRA=
 before_deploy:
 - npm install -g electron-packager
-- sudo add-apt-repository ppa:ubuntu-wine/ppa -y
+- sudo dpkg --add-architecture i386
+- wget https://dl.winehq.org/wine-builds/Release.key
+- sudo apt-key add Release.key
+- sudo apt-add-repository https://dl.winehq.org/wine-builds/ubuntu/
 - sudo apt-get update -q
 - sudo apt-get install --no-install-recommends -y wine1.8
 - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
