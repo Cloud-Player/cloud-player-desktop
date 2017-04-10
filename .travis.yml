@@ -13,6 +13,7 @@ before_deploy:
 - npm run package:all
 - cd ./dist/osx && zip -r Cloud-Player.osx.zip Cloud-Player-darwin-x64 && cd ../..
 - cd ./dist/win && zip -r Cloud-Player.win.zip Cloud-Player-win32-ia32 && cd ../..
+- npm run dist
 deploy:
   provider: releases
   api_key:
@@ -20,6 +21,8 @@ deploy:
   file:
     - dist/osx/Cloud-Player.osx.zip
     - dist/win/Cloud-Player.win.zip
+    - dist/cloud-player.dmg
+    - dist/win/cloud-player.setup.exe
   skip_cleanup: true 
   on:
     tags: true
