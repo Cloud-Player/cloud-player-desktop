@@ -9,7 +9,7 @@ before_deploy:
 - npm install -g electron-packager
 - sudo add-apt-repository ppa:ubuntu-wine/ppa -y
 - sudo apt-get update -q
-- sudo apt-get install -y wine1.7
+- sudo apt-get install -y wine1.8
 - npm run package:all
 - cd ./dist/osx && zip -r Cloud-Player.osx.zip Cloud-Player-darwin-x64 && cd ../..
 - cd ./dist/win && zip -r Cloud-Player.win.zip Cloud-Player-win32-ia32 && cd ../..
