@@ -1,23 +1,27 @@
 {
   "name": "cloud-player-native",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Native Cloud-Player for Soundcloud tracks",
   "main": "./src/main.js",
   "private": true,
   "scripts": {
     "start": "electron ./src/main.js",
-
     "clean": "rm -rf ./dist",
     "clean:osx": "rm -rf ./dist/bundle/native/osx",
     "clean:win": "rm -rf ./dist/bundle/native/win",
-
-    "package:osx": "npm run clean:osx && electron-packager . Cloud-Player --out=./dist/osx --platform=darwin --arch=x64 --icon=icons/cloud-player.icns --ignore=dist --overwrite",
-    "package:win": "npm run clean:win && electron-packager . Cloud-Player --out=./dist/win --platform=win32 --arch=ia32 --icon=icons/cloud-player.ico --ignore=dist --overwrite",
-    "package:all": "npm run package:osx && npm run package:win"
+    "package:osx": "npm run clean:osx && electron-packager . Cloud-Player --out=./dist/osx --platform=darwin --arch=x64 --icon=build/icon.icns --ignore=dist --overwrite",
+    "package:win": "npm run clean:win && electron-packager . Cloud-Player --out=./dist/win --platform=win32 --arch=ia32 --icon=build/icon.ico --ignore=dist --overwrite",
+    "package:all": "npm run package:osx && npm run package:win",
+    "pack": "build --dir",
+    "dist": "build -mw",
+    "dist:osx": "build -m",
+    "dist:win": "build -w",
+    "dist:all": "npm run dist:osx && npm run dist:win"
   },
   "keywords": [
     "Soundcloud"
   ],
+  "author": "Indie Devs",
   "contributors": [
     "Alexander Zarges <alex.zarges@online.de> (http://zarg.es/)",
     "Daniel Reißner <mail@danielreissner.com (http://danielreissner.com)",
@@ -41,8 +45,10 @@
     "winston": "2.1.1"
   },
   "devDependencies": {
-    "electron-prebuilt": "^1.4.13",
-    "electron-packager": "8.5.0"
+    "electron-builder": "16.8.2",
+    "electron-builder-squirrel-windows": "^16.7.0",
+    "electron-packager": "8.5.0",
+    "electron-prebuilt": "^1.4.13"
   },
   "repository": {
     "type": "git",
@@ -51,5 +57,34 @@
   "bugs": {
     "url": "https://github.com/zarlex/cloud-player-native/issues"
   },
-  "homepage": "https://github.com/atom/electron-quick-start#readme"
+  "homepage": "https://github.com/atom/electron-quick-start#readme",
+  "build": {
+    "appId": "com.cloud-player.app",
+    "productName": "Cloud Player",
+    "artifactName": "cloud-player.${ext}",
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 153
+        },
+        {
+          "x": 432,
+          "y": 153,
+          "type": "link",
+          "path": "/Applications"
+        },
+        {
+          "x": 680,
+          "y": 1,
+          "type": "file",
+          "path": ".background"
+        }
+      ]
+    },
+    "nsis": {
+      "artifactName": "cloud-player.setup.${ext}",
+      "deleteAppDataOnUninstall": true
+    }
+  }
 }
