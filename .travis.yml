@@ -9,7 +9,11 @@ before_deploy:
 - npm install -g electron-packager
 - sudo add-apt-repository ppa:ubuntu-wine/ppa -y
 - sudo apt-get update -q
-- sudo apt-get install -y wine1.8
+- sudo apt-get install --no-install-recommends -y wine1.8
+- sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+- echo "deb http://download.mono-project.com/repo/debian wheezy main" | sudo tee /etc/apt/sources.list.d/mono-xamarin.list
+- sudo apt-get update
+- sudo apt-get install --no-install-recommends -y mono-devel ca-certificates-mono
 - npm run package:all
 - cd ./dist/osx && zip -r Cloud-Player.osx.zip Cloud-Player-darwin-x64 && cd ../..
 - cd ./dist/win && zip -r Cloud-Player.win.zip Cloud-Player-win32-ia32 && cd ../..
