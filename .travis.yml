@@ -9,7 +9,7 @@ before_deploy:
 - npm install -g electron-packager
 - wget https://dl.winehq.org/wine-builds/Release.key
 - sudo apt-key add Release.key
-- sudo add-apt-repository ppa:wine/wine-builds
+- sudo add-apt-repository ppa:wine/wine-builds -q
 - sudo apt-get update -q
 - sudo apt-get install --no-install-recommends -y wine2.0
 - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
