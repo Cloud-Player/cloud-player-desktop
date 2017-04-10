@@ -17,7 +17,7 @@ before_deploy:
 - npm run package:all
 - cd ./dist/osx && zip -r Cloud-Player.osx.zip Cloud-Player-darwin-x64 && cd ../..
 - cd ./dist/win && zip -r Cloud-Player.win.zip Cloud-Player-win32-ia32 && cd ../..
-- npm run dist
+- npm run dist:all
 deploy:
   provider: releases
   api_key:
