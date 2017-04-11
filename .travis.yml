@@ -15,7 +15,7 @@ before_deploy:
 - brew upgrade
 - brew install imagemagick --disable-openmp --build-from-source
 - brew install Caskroom/cask/xquartz
-- brew install wine --without-x11
+- brew install wine
 - brew install mono
 - brew install gnu-tar graphicsmagick xz
 - brew install rpm
