@@ -12,7 +12,7 @@ env:
 before_deploy:
 - npm install -g electron-packager
 - brew install Caskroom/cask/xquartz
-- brew install --devel wine
+- brew install wine --without-x11
 - brew install mono
 - brew install gnu-tar graphicsmagick xz
 - brew install rpm
