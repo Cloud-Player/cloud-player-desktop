@@ -1,7 +1,7 @@
 process.once('loaded', function() {
   window.addEventListener('load', function(){
-    document.querySelector('body').classList.add('native', 'desktop');
+    document.querySelector('body').classList.add('native', 'desktop', process.platform);
     window.mode='NATIVE_DESKTOP';
-    window.appVersion =  '0.1.7';
+    window.appVersion =  '0.1.8';
   })
 });
