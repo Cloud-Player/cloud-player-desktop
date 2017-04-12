@@ -6,7 +6,7 @@ const WindowProperties = require("../models/window_properties_model");
 
 var PortalWindow = Window.extend({
   showDevTools: false,
-  url: 'http://cloud-player.io',
+  url: 'https://cloud-player.io',
   id: 'portal',
   windowEventBeforeOpen: 'dom-ready',
   options: {
