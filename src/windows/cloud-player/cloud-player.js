@@ -14,6 +14,8 @@ var PortalWindow = Window.extend({
     minHeight: 200,
     show: false,
     titleBarStyle: 'hidden',
+    autoHideMenuBar: true,
+    backgroundColor: '#efefef',
     webPreferences: {
       nodeIntegration: false,
       webSecurity: false,
