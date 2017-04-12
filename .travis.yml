@@ -31,7 +31,7 @@ deploy:
     - dist/osx/Cloud-Player.osx.zip
     - dist/win/Cloud-Player.win.zip
     - dist/cloud-player.dmg
-    - dist/win/cloud-player.setup.exe
+    - dist/cloud-player.setup.exe
   skip_cleanup: true 
   on:
     tags: true
