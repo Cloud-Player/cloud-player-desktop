@@ -13,23 +13,17 @@ before_deploy:
 - npm install -g electron-packager
 - brew update
 - brew upgrade
-- brew install imagemagick --disable-openmp --build-from-source
 - brew install Caskroom/cask/xquartz
 - brew install wine
 - brew install mono
 - brew install gnu-tar graphicsmagick xz
 - brew install rpm
-- npm run package:all
-- cd ./dist/osx && zip -r Cloud-Player.osx.zip Cloud-Player-darwin-x64 && cd ../..
-- cd ./dist/win && zip -r Cloud-Player.win.zip Cloud-Player-win32-ia32 && cd ../..
 - npm run dist:all
 deploy:
   provider: releases
   api_key:
     secure: 46EdYugb+jFGunvRjUxDlODEYvi3VG/P1PgzZwVpUocFDVDkm/8hUp+u31pfEakuo2sI6Jxlzl2JNxhvk0O/fhoDoHgxSNLjL2dChNHMT9OYi+vTrAgFLDdpZ1UHeiLgqfUuh6+P+R+b2Mv14sgSbmF1gvoI5eTQeoR1J3xfA/poZduuyxbdttdm0WD465or9iFaxQpm6aIK3+0H4rN/P083LqPdN1CCBOmz/GuKiCvJe5WXQnvvZNPl2H4eK7+LK89YenFtOUyDjC9Hy0Kr6njVG+T/BSXw1lfMymtJu97lUVWnUAkoExrb/3bnO5DCYbill5kUqAKvia8XfnWthlmaX32Aii6+pGASu+27BlVBDehA61GQeZTVpCIYMgOA89QY77j74rLk8FOjwticNJrSGk0E4WXccsLBTB1tApULP+0bHeFTNl8AadnLAtU5IhL4c7FOeQNHi6o5F3NPR2tLLagSn+/Y2fLt4kzBrNv3vWFG9gV77sAjYlaTOSqFjSaPRz0ay4wOJQziZBe7xvz93OmaPeMPpRSLRdk7PupGE+V0EXrK0cs4+8fN/rDuuWhSZ2MBEJgc+Ue9AiHJ0FW7b5klAY0LknoNzY64alf68E3EpxiR7JZqrR1hcqtXuu19OFa1F4+Aw/vhXf6ep9Z57ho5GZDfrUO/KYEz2bI=
   file:
-    - dist/osx/Cloud-Player.osx.zip
-    - dist/win/Cloud-Player.win.zip
     - dist/cloud-player.dmg
     - dist/cloud-player.setup.exe
   skip_cleanup: true 
