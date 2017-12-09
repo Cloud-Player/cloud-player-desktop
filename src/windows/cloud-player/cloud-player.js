@@ -65,10 +65,21 @@ var PortalWindow = Window.extend({
         this.showScConnectWindow(location);
       }
     }.bind(this));
+    
+    const filter = {
+      urls: [/*'https://*.doubleclick.net/*'*/]
+    };
 
-    this.on('MediaPlayPause', function () {
+    // Prevent loading of external resources
+    session.defaultSession.webRequest.onBeforeSendHeaders(filter, function (details, callback) {
+      callback({cancel: true})
+    });
+
+    var debouncedPlayPause = _.debounce(function () {
       this.window.webContents.executeJavaScript('window.dispatchEvent(new Event("playPauseTrackKeyPressed"))');
-    }, this);
+    }.bind(this), 10);
+
+    this.on('MediaPlayPause', debouncedPlayPause, this);
 
     this.on('MediaNextTrack', function () {
       this.window.webContents.executeJavaScript('window.dispatchEvent(new Event("nextTrackKeyPressed"))');
