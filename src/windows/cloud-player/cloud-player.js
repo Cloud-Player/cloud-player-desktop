@@ -3,14 +3,17 @@ const Window = require('../window');
 const ConnectWindow = require('../connect/connect');
 const WindowsProperties = require("../collections/windows_properties_collection");
 const WindowProperties = require("../models/window_properties_model");
+const _ = require('underscore');
+const session = require('electron').session;
 
 var PortalWindow = Window.extend({
   showDevTools: false,
   url: 'https://cloud-player.io',
   id: 'portal',
-  windowEventBeforeOpen: 'dom-ready',
+  windowEventBeforeOpen: 'clientReady',
+  hideWindowOnClose: true,
   options: {
-    minWidth: 400,
+    minWidth: 770,
     minHeight: 200,
     show: false,
     titleBarStyle: 'hidden',
