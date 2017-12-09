@@ -66,9 +66,21 @@ var PortalWindow = Window.extend({
     this.window.webContents.on('new-window', function (event, location) {
       if (location.match(/.*soundcloud.com\/connect.*/)) {
         this.showScConnectWindow(location);
+        return;
       }
+
+      // When user clicks on item in youtube player prevent opening an ew tab and play video instaed
+      var youtubeRegex = /.*youtube.com\/watch.*v=([^&]*)&?/;
+      var match = location.match(youtubeRegex);
+      if (match && match.length > 0) {
+        this.window.webContents.executeJavaScript(
+          'window.dispatchEvent(new CustomEvent("addAndPlayItem", {detail:{provider:"YOUTUBE",track: {id: "' + match[1] + '"}}}))'
+        );
+        event.preventDefault();
+      }
+
     }.bind(this));
-    
+
     const filter = {
       urls: [/*'https://*.doubleclick.net/*'*/]
     };
