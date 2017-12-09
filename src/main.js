@@ -48,8 +48,11 @@ app.on('ready', function () {
 
   ['MediaPlayPause', 'MediaNextTrack', 'MediaPreviousTrack'].forEach(function (shortcut) {
     globalShortcut.register(shortcut, function () {
-      windowManager.getActiveWindow().trigger(shortcut);
+      if (windowManager.getActiveWindow()) {
+        windowManager.getActiveWindow().trigger(shortcut);
+      }
     });
   });
+});
 
 });
