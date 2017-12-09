@@ -73,12 +73,6 @@
           "y": 153,
           "type": "link",
           "path": "/Applications"
-        },
-        {
-          "x": 680,
-          "y": 1,
-          "type": "file",
-          "path": ".background"
         }
       ]
     },
