@@ -32,12 +32,16 @@ _.extend(Window.prototype, Backbone.Events, {
   _initialized: false,
   _windowOpenedAt: null,
   _canBeOpened: true,
+  _domIsReady: false,
   _initBeforeOpeneEventHandler: function () {
     if (this.windowEventBeforeOpen) {
       this._canBeOpened = false;
       this.window.webContents.on(this.windowEventBeforeOpen, function () {
         this._canBeOpened = true;
-      }.bind(this))
+      }.bind(this));
+      this._executeOnClientWindowEvent(this.windowEventBeforeOpen, function () {
+        this._canBeOpened = true;
+      }.bind(this));
     }
   },
   _initMinCloseHandler: function () {
@@ -108,6 +112,20 @@ _.extend(Window.prototype, Backbone.Events, {
     this.trigger('initialize');
 
   },
+  _executeOnClientWindowEvent: function (ev, callback) {
+    if (!this._domIsReady) {
+      this.window.webContents.on('dom-ready', function () {
+        this._domIsReady = true;
+        this._executeOnClientWindowEvent(ev, callback);
+      }.bind(this));
+      return;
+    }
+    this.window.webContents.executeJavaScript('' +
+      'new Promise(function(resolve){window.addEventListener("' + ev + '",resolve)})')
+      .then(function () {
+        callback.apply(this, arguments);
+      }.bind(this));
+  },
   options: function () {
     return {}
   },
@@ -121,7 +139,11 @@ _.extend(Window.prototype, Backbone.Events, {
       console.log('BEFORE SHOW WAIT', this.id)
       this.window.webContents.on(this.windowEventBeforeOpen, function () {
         dfd.resolve.apply(this);
-      }.bind(this))
+      }.bind(this));
+      this._executeOnClientWindowEvent(this.windowEventBeforeOpen, function () {
+        this._canBeOpened = true;
+        dfd.resolve.apply(this);
+      }.bind(this));
     } else {
       console.log('BEFORE SHOW', this.id)
       dfd.resolve.apply(this);
