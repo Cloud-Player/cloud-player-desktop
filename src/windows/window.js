@@ -27,6 +27,7 @@ _.extend(Window.prototype, Backbone.Events, {
   minDisplayTime: 0,
   windowEventBeforeOpen: null,
   initOnCreation: false,
+  hideWindowOnClose: false,
   _isOpened: false,
   _initialized: false,
   _windowOpenedAt: null,
@@ -55,8 +56,17 @@ _.extend(Window.prototype, Backbone.Events, {
         }
       }.bind(this));
     } else {
-      this.window.on('close', function () {
-        this.trigger('close');
+      this.window.on('close', function (ev) {
+        if (this.hideWindowOnClose) {
+          ev.preventDefault();
+          this.window.hide();
+          this._isOpened = false;
+          this.trigger('hide');
+          console.log('HIDE', this.id)
+        } else {
+          this.trigger('close');
+          console.log('CLOSE', this.id)
+        }
       }.bind(this));
       this.window.on('closed', function () {
         this.trigger('closed');
@@ -78,6 +88,12 @@ _.extend(Window.prototype, Backbone.Events, {
     this.window.on('focus', function () {
       this.trigger('focus');
     }.bind(this));
+
+    this.on('before-quit', function () {
+      // Make sure that window can be closed when app is about to quit
+      console.log('MAKE WINDOW CLOSEABLE', this.id);
+      this.hideWindowOnClose = false;
+    });
 
     this.on('closed', function () {
       this._isOpened = false;
