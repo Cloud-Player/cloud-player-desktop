@@ -85,28 +85,6 @@ echo "##########################################"
 echo " Releasing version ${VERSION_NUMBER}... "
 echo "##########################################"
 
-# The .releaseignore becomes the gitignore for the release so that files that are actually ignored can be released (e.g. the dist folder)
-# After the commit the actual .gitignore will be set
-mv .gitignore .ignore_tmp
-cp .releaseignore .gitignore
-
-git add -A
-git reset .gitignore
-git reset .ignore_tmp
-git reset .releaseignore
-if [ "$(git diff --cached --exit-code)" ]
-then
-  git commit -m "release version ${VERSION_NUMBER}"
-  RELEASE_COMMIT_HASH=`git rev-parse --verify HEAD`
-else
-  mv .gitignore .releaseignore
-  mv .ignore_tmp .gitignore
-  exit_with_error "${VERSION_NUMBER} did not contain any changes so the release is aborted"
-fi
-
-mv .gitignore .releaseignore
-mv .ignore_tmp .gitignore
-
 # Create tag and push it
 git tag -a v${VERSION_NUMBER} -m "Version ${VERSION_NUMBER}" -m "${CHANGELOG}"
 git push origin_gh --tags --no-verify > /dev/null 2>&1 || exit_with_error "Could not publish tag v${VERSION_NUMBER}"
