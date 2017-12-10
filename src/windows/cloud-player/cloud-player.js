@@ -3,17 +3,22 @@ const Window = require('../window');
 const ConnectWindow = require('../connect/connect');
 const WindowsProperties = require("../collections/windows_properties_collection");
 const WindowProperties = require("../models/window_properties_model");
+const _ = require('underscore');
+const session = require('electron').session;
 
 var PortalWindow = Window.extend({
   showDevTools: false,
-  url: 'http://cloud-player.io',
+  url: 'https://cloud-player.io',
   id: 'portal',
-  windowEventBeforeOpen: 'dom-ready',
+  windowEventBeforeOpen: 'clientReady',
+  hideWindowOnClose: true,
   options: {
-    minWidth: 400,
+    minWidth: 770,
     minHeight: 200,
     show: false,
     titleBarStyle: 'hidden',
+    autoHideMenuBar: true,
+    backgroundColor: '#efefef',
     webPreferences: {
       nodeIntegration: false,
       webSecurity: false,
@@ -61,12 +66,36 @@ var PortalWindow = Window.extend({
     this.window.webContents.on('new-window', function (event, location) {
       if (location.match(/.*soundcloud.com\/connect.*/)) {
         this.showScConnectWindow(location);
+        event.preventDefault();
+        return;
       }
+
+      // When user clicks on item in youtube player prevent opening an ew tab and play video instaed
+      var youtubeRegex = /.*youtube.com\/watch.*v=([^&]*)&?/;
+      var match = location.match(youtubeRegex);
+      if (match && match.length > 0) {
+        this.window.webContents.executeJavaScript(
+          'window.dispatchEvent(new CustomEvent("addAndPlayItem", {detail:{provider:"YOUTUBE",track: {id: "' + match[1] + '"}}}))'
+        );
+        event.preventDefault();
+      }
+
     }.bind(this));
 
-    this.on('MediaPlayPause', function () {
+    // const filter = {
+    //   urls: ['https://*.doubleclick.net/*']
+    // };
+    //
+    // // Prevent loading of external resources
+    // session.defaultSession.webRequest.onBeforeSendHeaders(filter, function (details, callback) {
+    //   callback({cancel: true})
+    // });
+
+    var debouncedPlayPause = _.debounce(function () {
       this.window.webContents.executeJavaScript('window.dispatchEvent(new Event("playPauseTrackKeyPressed"))');
-    }, this);
+    }.bind(this), 10);
+
+    this.on('MediaPlayPause', debouncedPlayPause, this);
 
     this.on('MediaNextTrack', function () {
       this.window.webContents.executeJavaScript('window.dispatchEvent(new Event("nextTrackKeyPressed"))');

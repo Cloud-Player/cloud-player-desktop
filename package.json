@@ -45,10 +45,10 @@
     "winston": "2.1.1"
   },
   "devDependencies": {
-    "electron-builder": "16.8.2",
-    "electron-builder-squirrel-windows": "^16.7.0",
-    "electron-packager": "8.5.0",
-    "electron-prebuilt": "^1.4.13"
+    "electron": "1.7.9",
+    "electron-builder": "19.48.2",
+    "electron-builder-squirrel-windows": "19.48.0",
+    "electron-packager": "10.1.0"
   },
   "repository": {
     "type": "git",
@@ -73,12 +73,6 @@
           "y": 153,
           "type": "link",
           "path": "/Applications"
-        },
-        {
-          "x": 680,
-          "y": 1,
-          "type": "file",
-          "path": ".background"
         }
       ]
     },

@@ -27,16 +27,21 @@ _.extend(Window.prototype, Backbone.Events, {
   minDisplayTime: 0,
   windowEventBeforeOpen: null,
   initOnCreation: false,
+  hideWindowOnClose: false,
   _isOpened: false,
   _initialized: false,
   _windowOpenedAt: null,
   _canBeOpened: true,
+  _domIsReady: false,
   _initBeforeOpeneEventHandler: function () {
     if (this.windowEventBeforeOpen) {
       this._canBeOpened = false;
       this.window.webContents.on(this.windowEventBeforeOpen, function () {
         this._canBeOpened = true;
-      }.bind(this))
+      }.bind(this));
+      this._executeOnClientWindowEvent(this.windowEventBeforeOpen, function () {
+        this._canBeOpened = true;
+      }.bind(this));
     }
   },
   _initMinCloseHandler: function () {
@@ -55,8 +60,17 @@ _.extend(Window.prototype, Backbone.Events, {
         }
       }.bind(this));
     } else {
-      this.window.on('close', function () {
-        this.trigger('close');
+      this.window.on('close', function (ev) {
+        if (this.hideWindowOnClose) {
+          ev.preventDefault();
+          this.window.hide();
+          this._isOpened = false;
+          this.trigger('hide');
+          console.log('HIDE', this.id)
+        } else {
+          this.trigger('close');
+          console.log('CLOSE', this.id)
+        }
       }.bind(this));
       this.window.on('closed', function () {
         this.trigger('closed');
@@ -79,6 +93,12 @@ _.extend(Window.prototype, Backbone.Events, {
       this.trigger('focus');
     }.bind(this));
 
+    this.on('before-quit', function () {
+      // Make sure that window can be closed when app is about to quit
+      console.log('MAKE WINDOW CLOSEABLE', this.id);
+      this.hideWindowOnClose = false;
+    });
+
     this.on('closed', function () {
       this._isOpened = false;
       this._initialized = false;
@@ -91,6 +111,20 @@ _.extend(Window.prototype, Backbone.Events, {
     this._initialized = true;
     this.trigger('initialize');
 
+  },
+  _executeOnClientWindowEvent: function (ev, callback) {
+    if (!this._domIsReady) {
+      this.window.webContents.on('dom-ready', function () {
+        this._domIsReady = true;
+        this._executeOnClientWindowEvent(ev, callback);
+      }.bind(this));
+      return;
+    }
+    this.window.webContents.executeJavaScript('' +
+      'new Promise(function(resolve){window.addEventListener("' + ev + '",resolve)})')
+      .then(function () {
+        callback.apply(this, arguments);
+      }.bind(this));
   },
   options: function () {
     return {}
@@ -105,7 +139,11 @@ _.extend(Window.prototype, Backbone.Events, {
       console.log('BEFORE SHOW WAIT', this.id)
       this.window.webContents.on(this.windowEventBeforeOpen, function () {
         dfd.resolve.apply(this);
-      }.bind(this))
+      }.bind(this));
+      this._executeOnClientWindowEvent(this.windowEventBeforeOpen, function () {
+        this._canBeOpened = true;
+        dfd.resolve.apply(this);
+      }.bind(this));
     } else {
       console.log('BEFORE SHOW', this.id)
       dfd.resolve.apply(this);

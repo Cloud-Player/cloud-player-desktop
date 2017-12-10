@@ -14,7 +14,7 @@ const winston = require('winston');
 const globalShortcut = require('electron').globalShortcut;
 
 
-winston.add(winston.transports.File, { filename: app.getPath('userData')+'/error.log'});
+winston.add(winston.transports.File, {filename: app.getPath('userData') + '/error.log'});
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -48,8 +48,15 @@ app.on('ready', function () {
 
   ['MediaPlayPause', 'MediaNextTrack', 'MediaPreviousTrack'].forEach(function (shortcut) {
     globalShortcut.register(shortcut, function () {
-      windowManager.getActiveWindow().trigger(shortcut);
+      if (windowManager.getActiveWindow()) {
+        windowManager.getActiveWindow().trigger(shortcut);
+      }
     });
   });
+});
 
+app.on('before-quit', function () {
+  windowManager.getOpenedWindows().forEach(function (window) {
+    window.trigger('before-quit');
+  });
 });
