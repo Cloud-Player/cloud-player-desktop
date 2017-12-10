@@ -81,14 +81,14 @@ var PortalWindow = Window.extend({
 
     }.bind(this));
 
-    const filter = {
-      urls: [/*'https://*.doubleclick.net/*'*/]
-    };
-
-    // Prevent loading of external resources
-    session.defaultSession.webRequest.onBeforeSendHeaders(filter, function (details, callback) {
-      callback({cancel: true})
-    });
+    // const filter = {
+    //   urls: ['https://*.doubleclick.net/*']
+    // };
+    //
+    // // Prevent loading of external resources
+    // session.defaultSession.webRequest.onBeforeSendHeaders(filter, function (details, callback) {
+    //   callback({cancel: true})
+    // });
 
     var debouncedPlayPause = _.debounce(function () {
       this.window.webContents.executeJavaScript('window.dispatchEvent(new Event("playPauseTrackKeyPressed"))');
