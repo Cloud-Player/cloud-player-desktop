@@ -10,12 +10,22 @@ env:
   - GH_REF=github.com/Cloud-Player/desktop-app
   - secure: npFPi1qA9fvvMyWyx1UY5NVp2gyaB+DZDDJj2Rc5QnCSuHFYYsX1Aj2xmVz+EWXlJoNyMnnx42sSdtrd+FGpx3p2QXINgVfs3fJtKTiimTJIzKtaNJpn1p58fPjlhHU+FnTM9pWKUkITRUs3EiR9Bo4AUVYvCPnGNmaQysBVwShbXHeLRC/qa4vaA+PPyrY4U+ovY9wksupmsHSPRYejyKjwXtSQKK6b46CPVfPdJnqnycWW5i5Y5DV4Gjw6XjNVRtYIE1h9ukDIM4KSQ6yN3e2FsTdCNMSnpUj9oPai9Kfb0T1igoOnOvyXr83nOVSUwDaq3CyFkRRg71Vxx39jHx+dVkYJpxvKkniix9JAPXYoF7jwMAsNiDt67kCQuS95pKCAZfcuU10mSZEBvp5dyzmUElj+exA3xxHG5ovBUEmK+LiXI2eurVwftJTGP3h3b+uz06wpUer05H9rp96aja5wAtgrFDfT2d/AUUoCBtWK4YKs82tOhWpY/Dtg06LYLD11ucB9E0OMFQkVTOBBS47it08LROsde58rKJh06g8Oco7hUd8WZ7oxfoirZHv7bqi2Z6yaYpu+kyHDyA9iwsnHgiQyrBIM4L7DuSrj/uh/0yty7Dk8y6uioKM3DOU0zs05HJCd24T7bMLqLEDZ2VUuUAqO1ETQGM2mR6nhPRA=
 deploy:
-  provider: releases
-  api_key:
-    secure: 46EdYugb+jFGunvRjUxDlODEYvi3VG/P1PgzZwVpUocFDVDkm/8hUp+u31pfEakuo2sI6Jxlzl2JNxhvk0O/fhoDoHgxSNLjL2dChNHMT9OYi+vTrAgFLDdpZ1UHeiLgqfUuh6+P+R+b2Mv14sgSbmF1gvoI5eTQeoR1J3xfA/poZduuyxbdttdm0WD465or9iFaxQpm6aIK3+0H4rN/P083LqPdN1CCBOmz/GuKiCvJe5WXQnvvZNPl2H4eK7+LK89YenFtOUyDjC9Hy0Kr6njVG+T/BSXw1lfMymtJu97lUVWnUAkoExrb/3bnO5DCYbill5kUqAKvia8XfnWthlmaX32Aii6+pGASu+27BlVBDehA61GQeZTVpCIYMgOA89QY77j74rLk8FOjwticNJrSGk0E4WXccsLBTB1tApULP+0bHeFTNl8AadnLAtU5IhL4c7FOeQNHi6o5F3NPR2tLLagSn+/Y2fLt4kzBrNv3vWFG9gV77sAjYlaTOSqFjSaPRz0ay4wOJQziZBe7xvz93OmaPeMPpRSLRdk7PupGE+V0EXrK0cs4+8fN/rDuuWhSZ2MBEJgc+Ue9AiHJ0FW7b5klAY0LknoNzY64alf68E3EpxiR7JZqrR1hcqtXuu19OFa1F4+Aw/vhXf6ep9Z57ho5GZDfrUO/KYEz2bI=
-  file:
-    - dist/cloud-player.dmg
-    - dist/cloud-player.setup.exe
-  skip_cleanup: true 
-  on:
-    tags: true
+ - provider: script
+   script: ./bin/release_on_github.sh
+   skip_cleanup: true
+   on:
+     branch: master
+ - provider: script
+   script: ./bin/package_app.sh
+   skip_cleanup: true
+   on:
+     tags: true
+ - provider: releases
+   api_key:
+     secure: 46EdYugb+jFGunvRjUxDlODEYvi3VG/P1PgzZwVpUocFDVDkm/8hUp+u31pfEakuo2sI6Jxlzl2JNxhvk0O/fhoDoHgxSNLjL2dChNHMT9OYi+vTrAgFLDdpZ1UHeiLgqfUuh6+P+R+b2Mv14sgSbmF1gvoI5eTQeoR1J3xfA/poZduuyxbdttdm0WD465or9iFaxQpm6aIK3+0H4rN/P083LqPdN1CCBOmz/GuKiCvJe5WXQnvvZNPl2H4eK7+LK89YenFtOUyDjC9Hy0Kr6njVG+T/BSXw1lfMymtJu97lUVWnUAkoExrb/3bnO5DCYbill5kUqAKvia8XfnWthlmaX32Aii6+pGASu+27BlVBDehA61GQeZTVpCIYMgOA89QY77j74rLk8FOjwticNJrSGk0E4WXccsLBTB1tApULP+0bHeFTNl8AadnLAtU5IhL4c7FOeQNHi6o5F3NPR2tLLagSn+/Y2fLt4kzBrNv3vWFG9gV77sAjYlaTOSqFjSaPRz0ay4wOJQziZBe7xvz93OmaPeMPpRSLRdk7PupGE+V0EXrK0cs4+8fN/rDuuWhSZ2MBEJgc+Ue9AiHJ0FW7b5klAY0LknoNzY64alf68E3EpxiR7JZqrR1hcqtXuu19OFa1F4+Aw/vhXf6ep9Z57ho5GZDfrUO/KYEz2bI=
+   file:
+     - dist/cloud-player.dmg
+     - dist/cloud-player.setup.exe
+   skip_cleanup: true 
+   on:
+     tags: true
