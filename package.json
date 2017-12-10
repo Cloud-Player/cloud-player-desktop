@@ -1,6 +1,6 @@
 {
   "name": "cloud-player-native",
-  "version": "0.1.8",
+  "version": "1.0.0",
   "description": "Native Cloud-Player for Soundcloud tracks",
   "main": "./src/main.js",
   "private": true,
