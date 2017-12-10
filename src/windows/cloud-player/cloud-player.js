@@ -66,6 +66,7 @@ var PortalWindow = Window.extend({
     this.window.webContents.on('new-window', function (event, location) {
       if (location.match(/.*soundcloud.com\/connect.*/)) {
         this.showScConnectWindow(location);
+        event.preventDefault();
         return;
       }
 
