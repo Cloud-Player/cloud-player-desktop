@@ -9,5 +9,5 @@ process.once('loaded', function () {
       }
     });
     window.dispatchEvent(startNativeClientEvent);
-  })
+  });
 });
