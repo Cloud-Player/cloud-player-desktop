@@ -82,8 +82,18 @@ var PortalWindow = Window.extend({
     }.bind(this));
 
     this.window.webContents.on('new-window', function (event, location) {
+      /*
+       * DEPRECATED only to support older versions
+       * TODO Remove this
+       */
       if (location.match(/.*soundcloud.com\/connect.*/)) {
-        this.showScConnectWindow(location);
+        this.showConnectWindow.call(this, location);
+        event.preventDefault();
+        return;
+      }
+
+      if (location.match(/.*api.cloud-player.io\/*/)) {
+        this.showConnectWindow.call(this, location);
         event.preventDefault();
         return;
       }
