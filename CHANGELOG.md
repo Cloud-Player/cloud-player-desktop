@@ -4,3 +4,10 @@
 - Fix bug when Play/Pause is is triggered twice
 - Trigger start event on Cloud Player instead of setting class
 - Add functionality to wait on client event before showing window
+
+# v1.1.0
+- Update dependencies to latest version
+- Remove splash screen and open player immediately
+- Clean up dependencies
+- Prepare new authentication mechanism for web player 5.0 
+ 
