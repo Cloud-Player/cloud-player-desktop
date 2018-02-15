@@ -1,7 +1,7 @@
 {
   "name": "cloud-player-native",
   "version": "1.0.0",
-  "description": "Native Cloud-Player for Soundcloud tracks",
+  "description": "Native Cloud Player to play music from SoundCloud and YouTube",
   "main": "./src/main.js",
   "private": true,
   "scripts": {
@@ -9,23 +9,28 @@
     "clean": "rm -rf ./dist",
     "clean:osx": "rm -rf ./dist/bundle/native/osx",
     "clean:win": "rm -rf ./dist/bundle/native/win",
+    "clean:linux": "rm -rf ./dist/bundle/native/linux",
     "package:osx": "npm run clean:osx && electron-packager . Cloud-Player --out=./dist/osx --platform=darwin --arch=x64 --icon=build/icon.icns --ignore=dist --overwrite",
     "package:win": "npm run clean:win && electron-packager . Cloud-Player --out=./dist/win --platform=win32 --arch=ia32 --icon=build/icon.ico --ignore=dist --overwrite",
-    "package:all": "npm run package:osx && npm run package:win",
+    "package:linux": "npm run clean:linux && electron-packager . Cloud-Player --out=./dist/linux --platform=linux --arch=x64 --icon=build/icon.png --ignore=dist --overwrite",
+    "package:all": "npm run package:osx && npm run package:win && npm run package:linux",
     "pack": "build --dir",
-    "dist": "build -mw",
+    "dist": "build -mwl",
     "dist:osx": "build -m",
     "dist:win": "build -w",
-    "dist:all": "npm run dist:osx && npm run dist:win"
+    "dist:linux": "build -l",
+    "dist:all": "npm run dist:osx && npm run dist:win && npm run dist:linux"
   },
   "keywords": [
-    "Soundcloud"
+    "Soundcloud",
+    "YouTube",
+    "Native",
+    "Cloud-Player",
+    "Electron"
   ],
-  "author": "Indie Devs",
+  "author": "Cloud-Player Development Team",
   "contributors": [
-    "Alexander Zarges <alex.zarges@online.de> (http://zarg.es/)",
-    "Daniel Reißner <mail@danielreissner.com (http://danielreissner.com)",
-    "Kai Schulz <mail@kaischulz.com> (http://kaischulz.com)"
+    "hello@cloud-player.io"
   ],
   "licenses": [
     {
@@ -34,21 +39,17 @@
     }
   ],
   "dependencies": {
-    "angular": "1.4.8",
     "backbone": "1.2.3",
-    "lokijs": "1.3.10",
+    "lokijs": "1.5.2",
     "underscore": "1.8.3",
-    "angular-route": "1.4.8",
     "cheerio": "0.19.0",
-    "q": "1.4.1",
-    "request": "2.67.0",
-    "winston": "2.1.1"
+    "q": "1.5.1"
   },
   "devDependencies": {
-    "electron": "1.7.9",
-    "electron-builder": "19.48.2",
-    "electron-builder-squirrel-windows": "19.48.0",
-    "electron-packager": "10.1.0"
+    "electron": "1.8.2",
+    "electron-builder": "20.0.4",
+    "electron-builder-squirrel-windows": "20.0.4",
+    "electron-packager": "11.0.1"
   },
   "repository": {
     "type": "git",
