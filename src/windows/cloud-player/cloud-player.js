@@ -103,7 +103,7 @@ var PortalWindow = Window.extend({
       var match = location.match(youtubeRegex);
       if (match && match.length > 0) {
         this.window.webContents.executeJavaScript(
-          'window.dispatchEvent(new CustomEvent("addAndPlayItem", {detail:{provider:"YOUTUBE",track: {id: "' + match[1] + '"}}}))'
+          'window.dispatchEvent(new CustomEvent("playTrack", {detail:{track: {provider:"youtube", id: "' + match[1] + '"}}}))'
         );
         event.preventDefault();
       }
