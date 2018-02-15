@@ -17,6 +17,7 @@ before_deploy:
  - brew install mono
  - brew install gnu-tar graphicsmagick xz
  - brew install rpm
+ - brew install snapcraft
  - npm install -g electron-packager
 deploy:
  - provider: script

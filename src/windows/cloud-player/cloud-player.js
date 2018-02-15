@@ -5,12 +5,12 @@ const WindowsProperties = require("../collections/windows_properties_collection"
 const WindowProperties = require("../models/window_properties_model");
 const _ = require('underscore');
 const session = require('electron').session;
+const Q = require('q');
 
 var PortalWindow = Window.extend({
   showDevTools: false,
   url: 'https://cloud-player.io',
   id: 'portal',
-  windowEventBeforeOpen: 'clientReady',
   hideWindowOnClose: true,
   options: {
     minWidth: 770,
@@ -25,47 +25,75 @@ var PortalWindow = Window.extend({
       preload: __dirname + '/preload.js'
     }
   },
-  showScConnectWindow: function (url) {
-    this._connectionWindow = new ConnectWindow({url: url});
+  windowsProperties: new WindowsProperties(),
+  windowProperties: null,
+  showConnectWindow: function (url) {
+    this._connectionWindow = new ConnectWindow({
+      url: url,
+      options: {
+        parent: this.window,
+        modal: false
+      }
+    });
     this._connectionWindow.open();
   },
-  initialize: function () {
-    var windowsProperties = new WindowsProperties(),
-      size = electron.screen.getPrimaryDisplay().workAreaSize,
-      windowProperties;
+  setLastWindowSize: function () {
+    var dfd = Q.defer(),
+      size = electron.screen.getPrimaryDisplay().workAreaSize;
 
     this.window.setContentSize(size.width, size.height);
 
-    windowsProperties.find({name: 'portal'}).then(function (collection) {
+    this.windowsProperties.find({name: 'portal'}).then(function (collection) {
       if (collection.length === 0) {
-        windowProperties = new WindowProperties({name: 'portal'});
+        this.windowProperties = new WindowProperties({name: 'portal'});
       } else {
-        windowProperties = collection.first();
-        var size = windowProperties.get('size'),
-          position = windowProperties.get('position');
+        this.windowProperties = collection.first();
+        var size = this.windowProperties.get('size'),
+          position = this.windowProperties.get('position');
 
         this.window.setContentSize(size.width, size.height);
         this.window.setPosition(position.x, position.y);
       }
+      dfd.resolve();
     }.bind(this));
 
+    return dfd.promise;
+  },
+  beforeShow: function () {
+    var dfd = Q.defer();
+    this.setLastWindowSize().then(function () {
+      dfd.resolve();
+    });
+    return dfd.promise;
+  },
+  initialize: function () {
     this.on('close', function () {
-      if (windowProperties) {
-        windowProperties.set('size', {
+      if (this.windowProperties) {
+        this.windowProperties.set('size', {
           width: this.window.getContentSize()[0],
           height: this.window.getContentSize()[1]
         });
-        windowProperties.set('position', {
+        this.windowProperties.set('position', {
           x: this.window.getPosition()[0],
           y: this.window.getPosition()[1]
         });
-        windowProperties.save();
+        this.windowProperties.save();
       }
     }.bind(this));
 
     this.window.webContents.on('new-window', function (event, location) {
+      /*
+       * DEPRECATED only to support older versions
+       * TODO Remove this
+       */
       if (location.match(/.*soundcloud.com\/connect.*/)) {
-        this.showScConnectWindow(location);
+        this.showConnectWindow.call(this, location);
+        event.preventDefault();
+        return;
+      }
+
+      if (location.match(/.*api.cloud-player.io\/*/)) {
+        this.showConnectWindow.call(this, location);
         event.preventDefault();
         return;
       }
@@ -75,7 +103,7 @@ var PortalWindow = Window.extend({
       var match = location.match(youtubeRegex);
       if (match && match.length > 0) {
         this.window.webContents.executeJavaScript(
-          'window.dispatchEvent(new CustomEvent("addAndPlayItem", {detail:{provider:"YOUTUBE",track: {id: "' + match[1] + '"}}}))'
+          'window.dispatchEvent(new CustomEvent("playTrack", {detail:{track: {provider:"youtube", id: "' + match[1] + '"}}}))'
         );
         event.preventDefault();
       }
