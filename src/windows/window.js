@@ -15,8 +15,11 @@ var Window = function (options) {
   if (!this.id) {
     throw new Error('Id has to be specified');
   }
+  if(options.options){
+    _.extend(this.options, options.options);
+  }
   if (this.initOnCreation) {
-    this._prepare.apply(this, arguments);
+    this._prepare.call(this, options);
   }
 };
 
