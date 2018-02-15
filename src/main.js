@@ -6,15 +6,8 @@ const ipc = electron.ipcMain;
 
 const windowManager = require('./windows/window_manager');
 const CloudPlayerWindow = require('./windows/cloud-player/cloud-player');
-const SplashWindow = require('./windows/splash/splash');
 const nativeMenu = require('./native_menu');
-
-const os = require('os');
-const winston = require('winston');
 const globalShortcut = require('electron').globalShortcut;
-
-
-winston.add(winston.transports.File, {filename: app.getPath('userData') + '/error.log'});
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -35,14 +28,9 @@ app.on('activate', function () {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 app.on('ready', function () {
-  windowManager.registerWindow(new SplashWindow());
   windowManager.registerWindow(new CloudPlayerWindow());
 
-  windowManager.getWindowById('splash').open();
-
-  ipc.on('show-portal', function () {
-    windowManager.replaceOpenedWindowsWithWindow(windowManager.getWindowById('portal'), {reinitialize: true});
-  });
+  windowManager.getWindowById('portal').open();
 
   nativeMenu.setMenu();
 
