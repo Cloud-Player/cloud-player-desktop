@@ -5,12 +5,12 @@ const WindowsProperties = require("../collections/windows_properties_collection"
 const WindowProperties = require("../models/window_properties_model");
 const _ = require('underscore');
 const session = require('electron').session;
+const Q = require('q');
 
 var PortalWindow = Window.extend({
   showDevTools: false,
   url: 'https://cloud-player.io',
   id: 'portal',
-  windowEventBeforeOpen: 'clientReady',
   hideWindowOnClose: true,
   options: {
     minWidth: 770,
