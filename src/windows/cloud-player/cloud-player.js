@@ -65,7 +65,7 @@ var PortalWindow = Window.extend({
     return this.setLastWindowSize();
   },
   initialize: function () {
-    this.on('close', function () {
+    this.on('close hide', function () {
       if (this.windowProperties) {
         this.windowProperties.set('size', {
           width: this.window.getContentSize()[0],

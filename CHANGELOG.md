@@ -10,4 +10,7 @@
 - Remove splash screen and open player immediately
 - Clean up dependencies
 - Prepare new authentication mechanism for web player 5.0 
+
+# v1.1.1
+- Fix bug that window size and position was not persisted
  

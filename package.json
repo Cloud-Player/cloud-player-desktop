@@ -1,6 +1,6 @@
 {
   "name": "cloud-player-native",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Native Cloud Player to play music from SoundCloud and YouTube",
   "main": "./src/main.js",
   "private": true,
