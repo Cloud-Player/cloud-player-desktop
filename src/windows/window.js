@@ -15,7 +15,7 @@ var Window = function (options) {
   if (!this.id) {
     throw new Error('Id has to be specified');
   }
-  if(options.options){
+  if (options.options) {
     _.extend(this.options, options.options);
   }
   if (this.initOnCreation) {
@@ -183,12 +183,19 @@ _.extend(Window.prototype, Backbone.Events, {
       return dfd.promise;
     }
 
-    this.beforeShow().then(function () {
-      console.log('SHOW', this.id)
+    var start = function () {
       this.window.show();
       this._windowOpenedAt = +new Date();
       this.trigger('opened');
-    }.bind(this));
+      console.log('SHOW', this.id)
+    }.bind(this);
+
+    this.beforeShow().then(function () {
+      start();
+    }.bind(this), function (err) {
+      console.log('Error in beforeShow', err);
+      start();
+    });
 
     return dfd.promise;
   },

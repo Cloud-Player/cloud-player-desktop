@@ -38,33 +38,31 @@ var PortalWindow = Window.extend({
     this._connectionWindow.open();
   },
   setLastWindowSize: function () {
-    var dfd = Q.defer(),
-      size = electron.screen.getPrimaryDisplay().workAreaSize;
+    var size = electron.screen.getPrimaryDisplay().workAreaSize;
 
     this.window.setContentSize(size.width, size.height);
 
-    this.windowsProperties.find({name: 'portal'}).then(function (collection) {
-      if (collection.length === 0) {
-        this.windowProperties = new WindowProperties({name: 'portal'});
-      } else {
-        this.windowProperties = collection.first();
-        var size = this.windowProperties.get('size'),
-          position = this.windowProperties.get('position');
+    return this.windowsProperties.find({name: 'portal'}).then(function (collection) {
+      try {
+        if (collection.length === 0) {
+          this.windowProperties = new WindowProperties({name: 'portal'});
+        } else {
+          this.windowProperties = collection.first();
+          var size = this.windowProperties.get('size'),
+            position = this.windowProperties.get('position');
 
-        this.window.setContentSize(size.width, size.height);
-        this.window.setPosition(position.x, position.y);
+          this.window.setContentSize(size.width, size.height);
+          this.window.setPosition(position.x, position.y);
+        }
+      } catch (err) {
+        var dfd = Q.defer();
+        dfd.reject(err);
+        return dfd.promise;
       }
-      dfd.resolve();
     }.bind(this));
-
-    return dfd.promise;
   },
   beforeShow: function () {
-    var dfd = Q.defer();
-    this.setLastWindowSize().then(function () {
-      dfd.resolve();
-    });
-    return dfd.promise;
+    return this.setLastWindowSize();
   },
   initialize: function () {
     this.on('close', function () {
