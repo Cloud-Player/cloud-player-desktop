@@ -139,6 +139,34 @@ var PortalWindow = Window.extend({
     this.on('MediaPreviousTrack', function () {
       this.window.webContents.executeJavaScript('window.dispatchEvent(new Event("previousTrackKeyPressed"))');
     }, this);
+
+    this.window.webContents.session.on('will-download', (event, item) => {
+      item.on('updated', (event, state) => {
+        if (state === 'interrupted') {
+          console.log('Download is interrupted but can be resumed')
+        } else if (state === 'progressing') {
+          if (item.isPaused()) {
+            console.log('Download is paused')
+          } else {
+            this.window.webContents.executeJavaScript(
+              `window.dispatchEvent(new CustomEvent("downloadProgress", {detail: {path: "${item.getSavePath()}", receivedByes: ${item.getReceivedBytes()}, totalBytes:${item.getTotalBytes()}}}))`
+            );
+          }
+        }
+      });
+
+      item.once('updated', (event, state) => {
+        this.window.webContents.executeJavaScript('window.dispatchEvent(new Event("downloadStart"))');
+      });
+
+      item.once('done', (event, state) => {
+        if (state === 'completed') {
+          this.window.webContents.executeJavaScript('window.dispatchEvent(new Event("downloadCompleted"))');
+        } else {
+          this.window.webContents.executeJavaScript('window.dispatchEvent(new Event("downloadError"))');
+        }
+      })
+    });
   }
 });
 
