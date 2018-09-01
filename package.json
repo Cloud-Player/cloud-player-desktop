@@ -1,7 +1,7 @@
 {
   "name": "cloud-player-native",
-  "version": "1.1.1",
-  "description": "Native Cloud Player to play music from SoundCloud and YouTube",
+  "version": "1.2.0",
+  "description": "Native Cloud-Player to play music from YouTube, SoundCloud and MixCloud",
   "main": "./src/main.js",
   "private": true,
   "scripts": {
@@ -10,7 +10,7 @@
     "clean:osx": "rm -rf ./dist/bundle/native/osx",
     "clean:win": "rm -rf ./dist/bundle/native/win",
     "clean:linux": "rm -rf ./dist/bundle/native/linux",
-    "package:osx": "npm run clean:osx && electron-packager . Cloud-Player --out=./dist/osx --platform=darwin --arch=x64 --icon=build/icon.icns --ignore=dist --overwrite",
+    "package:osx": "npm run clean:osx && electron-packager . Cloud-Player --out=./dist/osx --platform=darwin --arch=x64 --icon=build/icon-beta.icns --ignore=dist --overwrite",
     "package:win": "npm run clean:win && electron-packager . Cloud-Player --out=./dist/win --platform=win32 --arch=ia32 --icon=build/icon.ico --ignore=dist --overwrite",
     "package:linux": "npm run clean:linux && electron-packager . Cloud-Player --out=./dist/linux --platform=linux --arch=x64 --icon=build/icon.png --ignore=dist --overwrite",
     "package:all": "npm run package:osx && npm run package:win && npm run package:linux",
@@ -42,14 +42,13 @@
     "backbone": "1.2.3",
     "lokijs": "1.5.2",
     "underscore": "1.8.3",
-    "cheerio": "0.19.0",
     "q": "1.5.1"
   },
   "devDependencies": {
-    "electron": "1.8.2",
-    "electron-builder": "20.0.4",
-    "electron-builder-squirrel-windows": "20.0.4",
-    "electron-packager": "11.0.1"
+    "electron": "2.0.8",
+    "electron-builder": "^20.28.3",
+    "electron-builder-squirrel-windows": "20.28.3",
+    "electron-packager": "12.1.1"
   },
   "repository": {
     "type": "git",
@@ -61,7 +60,7 @@
   "homepage": "https://github.com/atom/electron-quick-start#readme",
   "build": {
     "appId": "com.cloud-player.app",
-    "productName": "Cloud Player",
+    "productName": "Cloud-Player",
     "artifactName": "cloud-player.${ext}",
     "dmg": {
       "contents": [
