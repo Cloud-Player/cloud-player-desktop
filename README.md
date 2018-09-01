@@ -1,6 +1,4 @@
-[![Build Status]
-    (https://travis-ci.org/Cloud-Player/desktop-app.svg?branch=master)]
-    (https://travis-ci.org/Cloud-Player/desktop-app)
+[![Build Status](https://travis-ci.org/Cloud-Player/desktop-app.svg?branch=master)](https://travis-ci.org/Cloud-Player/desktop-app)
 
 # Cloud-Player
 [![Cloud Player Teaser](https://cloud-player.io/assets/desktop-app/osx-screenshot.png)](https://cloud-player.io)
