@@ -22,7 +22,6 @@ var PortalWindow = Window.extend({
     backgroundColor: '#efefef',
     webPreferences: {
       nodeIntegration: false,
-      webSecurity: false,
       preload: __dirname + '/preload.js'
     }
   },
