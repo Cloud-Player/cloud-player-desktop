@@ -1,4 +1,5 @@
 const electron = require('electron');
+const shell = require('electron').shell;
 const Window = require('../window');
 const ConnectWindow = require('../connect/connect');
 const WindowsProperties = require("../collections/windows_properties_collection");
@@ -103,6 +104,14 @@ var PortalWindow = Window.extend({
         this.window.webContents.executeJavaScript(
           'window.dispatchEvent(new CustomEvent("playTrack", {detail:{track: {provider:"youtube", id: "' + match[1] + '"}}}))'
         );
+        event.preventDefault();
+      }
+
+      // Listen on open-file location change to open a file
+      var openFileRegex = /(open-file:\/\/)(.*)/;
+      var openFileMatch = location.match(openFileRegex);
+      if (openFileMatch && openFileMatch.length > 0) {
+        shell.openItem(openFileMatch[2]);
         event.preventDefault();
       }
 
