@@ -1,4 +1,4 @@
-#/bin/sh
+#!/usr/bin/env bash
 set -e
 
 RELEASE_GIT_NAME="Bob Builder"
@@ -58,6 +58,9 @@ VERSION_NUMBER=$(cat package.json \
 # Get changelog from current version. Version has to be mentioned in Changelog: `# vX.X.X`
 CHANGELOG=$(sed -n -e "/# v$VERSION_NUMBER/,/# v/ p" CHANGELOG.md \
   | sed -e '1d;$d')
+
+# Ignore changes of package-lock.json
+git checkout -- package-lock.json
 
 # Check if a tag with the same version already exists
 if [ "$(git ls-remote origin_gh refs/tags/v${VERSION_NUMBER})" ]; then
