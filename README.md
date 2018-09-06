@@ -15,4 +15,4 @@ You can create a shortcut on your desktop to start the player easily.
 
 ## Related Repositories
 - [Cloud-Player API](https://github.com/Cloud-Player/api) (Python)
-- [Cloud-Player Web](https://github.com/Cloud-Player/web) (Electron)
+- [Cloud-Player Web](https://github.com/Cloud-Player/web) (Angular)
