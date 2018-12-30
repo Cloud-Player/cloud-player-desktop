@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/aux-app/desktop-app.svg?branch=master)](https://travis-ci.org/aux-app/desktop-app)
+[![Build Status](https://travis-ci.org/auxdotapp/desktop-app.svg?branch=master)](https://travis-ci.org/auxdotapp/desktop-app)
 
 # aux.app
 [![Cloud Player Teaser](https://aux.app/assets/desktop-app/osx-screenshot.png)](https://aux.app)
