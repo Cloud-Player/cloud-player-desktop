@@ -5,7 +5,7 @@ const app = electron.app;  // Module to control application life. // Module to c
 const ipc = electron.ipcMain;
 
 const windowManager = require('./windows/window_manager');
-const CloudPlayerWindow = require('./windows/cloud-player/cloud-player');
+const CloudPlayerWindow = require('./windows/aux-app/aux-app');
 const nativeMenu = require('./native_menu');
 const globalShortcut = require('electron').globalShortcut;
 

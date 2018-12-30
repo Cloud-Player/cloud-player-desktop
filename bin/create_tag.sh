@@ -2,7 +2,7 @@
 set -e
 
 RELEASE_GIT_NAME="Bob Builder"
-RELEASE_GIT_MAIL="hello@cloud-player.io"
+RELEASE_GIT_MAIL="hello@aux.app"
 
 CURRENT_GIT_USER=`git config user.name`
 CURRENT_GIT_USERMAIL=`git config user.email`

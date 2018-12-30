@@ -1,3 +1,7 @@
+# v2.0.0
+- Update dependencies
+- Rebrand to aux.app
+
 # v1.2.0
 - Update dependencies
 - Trigger download event

@@ -9,8 +9,8 @@ const session = require('electron').session;
 const Q = require('q');
 
 var PortalWindow = Window.extend({
-  showDevTools: false,
-  url: 'https://cloud-player.io',
+  showDevTools: true,
+  url: 'https://aux.app',
   id: 'portal',
   hideWindowOnClose: true,
   options: {
@@ -19,7 +19,7 @@ var PortalWindow = Window.extend({
     show: false,
     titleBarStyle: 'hidden',
     autoHideMenuBar: true,
-    backgroundColor: '#efefef',
+    backgroundColor: '#242127',
     webPreferences: {
       nodeIntegration: false,
       preload: __dirname + '/preload.js'
@@ -80,17 +80,7 @@ var PortalWindow = Window.extend({
     }.bind(this));
 
     this.window.webContents.on('new-window', function (event, location) {
-      /*
-       * DEPRECATED only to support older versions
-       * TODO Remove this
-       */
-      if (location.match(/.*soundcloud.com\/connect.*/)) {
-        this.showConnectWindow.call(this, location);
-        event.preventDefault();
-        return;
-      }
-
-      if (location.match(/.*api.cloud-player.io\/*/)) {
+      if (location.match(/.*api.aux.app\/*/)) {
         this.showConnectWindow.call(this, location);
         event.preventDefault();
         return;

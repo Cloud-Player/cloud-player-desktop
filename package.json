@@ -1,7 +1,7 @@
 {
-  "name": "cloud-player-native",
-  "version": "1.2.0",
-  "description": "Native Cloud-Player to play music from YouTube, SoundCloud and MixCloud",
+  "name": "aux-app-native",
+  "version": "2.0.0",
+  "description": "Native aux.app player to play music from YouTube, SoundCloud, MixCloud, Deezer,...",
   "main": "./src/main.js",
   "private": true,
   "scripts": {
@@ -10,9 +10,11 @@
     "clean:osx": "rm -rf ./dist/bundle/native/osx",
     "clean:win": "rm -rf ./dist/bundle/native/win",
     "clean:linux": "rm -rf ./dist/bundle/native/linux",
-    "package:osx": "npm run clean:osx && electron-packager . Cloud-Player --out=./dist/osx --platform=darwin --arch=x64 --icon=build/icon-beta.icns --ignore=dist --overwrite",
-    "package:win": "npm run clean:win && electron-packager . Cloud-Player --out=./dist/win --platform=win32 --arch=ia32 --icon=build/icon.ico --ignore=dist --overwrite",
-    "package:linux": "npm run clean:linux && electron-packager . Cloud-Player --out=./dist/linux --platform=linux --arch=x64 --icon=build/icon.png --ignore=dist --overwrite",
+    "create-app-icon:osx": "png2icns build/icon.icns build/icon.png",
+    "create-app-icon:win": "png-to-ico build/icon.png > build/icon.ico",
+    "package:osx": "npm run clean:osx && npm run create-app-icon:osx && electron-packager . aux-app --out=./dist/osx --platform=darwin --arch=x64 --icon=build/icon.icns --ignore=dist --overwrite",
+    "package:win": "npm run clean:win && npm run create-app-icon:win && electron-packager . aux-app --out=./dist/win --platform=win32 --arch=ia32 --icon=build/icon.ico --ignore=dist --overwrite",
+    "package:linux": "npm run clean:linux && electron-packager . aux-app --out=./dist/linux --platform=linux --arch=x64 --icon=build/icon.png --ignore=dist --overwrite",
     "package:all": "npm run package:osx && npm run package:win && npm run package:linux",
     "pack": "build --dir",
     "dist": "build -mwl",
@@ -24,13 +26,14 @@
   "keywords": [
     "Soundcloud",
     "YouTube",
-    "Native",
-    "Cloud-Player",
+    "Deezer",
+    "Mixcloud",
+    "aux.app",
     "Electron"
   ],
-  "author": "Cloud-Player Development Team",
+  "author": "aux.app development team",
   "contributors": [
-    "hello@cloud-player.io"
+    "hello@aux.app"
   ],
   "licenses": [
     {
@@ -40,28 +43,30 @@
   ],
   "dependencies": {
     "backbone": "1.2.3",
-    "lokijs": "1.5.2",
+    "lokijs": "1.5.5",
     "underscore": "1.8.3",
     "q": "1.5.1"
   },
   "devDependencies": {
-    "electron": "2.0.8",
-    "electron-builder": "^20.28.3",
-    "electron-builder-squirrel-windows": "20.28.3",
-    "electron-packager": "12.1.1"
+    "electron": "4.0.0",
+    "electron-builder": "20.38.4",
+    "electron-builder-squirrel-windows": "20.38.3",
+    "electron-packager": "13.0.1",
+    "png-to-ico": "2.0.1",
+    "png2icns": "0.0.1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/zarlex/cloud-player-native.git"
+    "url": "https://github.com/auxdotapp/desktop-app.git"
   },
   "bugs": {
-    "url": "https://github.com/zarlex/cloud-player-native/issues"
+    "url": "https://github.com/auxdotapp/desktop-app/issues"
   },
-  "homepage": "https://github.com/atom/electron-quick-start#readme",
+  "homepage": "https://aux.app",
   "build": {
-    "appId": "com.cloud-player.app",
-    "productName": "Cloud-Player",
-    "artifactName": "cloud-player.${ext}",
+    "appId": "com.aux-app.app",
+    "productName": "aux-app",
+    "artifactName": "aux-app.${ext}",
     "dmg": {
       "contents": [
         {
@@ -77,7 +82,7 @@
       ]
     },
     "nsis": {
-      "artifactName": "cloud-player.setup.${ext}",
+      "artifactName": "aux-app.setup.${ext}",
       "deleteAppDataOnUninstall": true
     }
   }
