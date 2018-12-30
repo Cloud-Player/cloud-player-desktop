@@ -3,7 +3,7 @@
 # aux.app
 [![Cloud Player Teaser](https://aux.app/assets/desktop-app/osx-screenshot.png)](https://aux.app)
 
-## Cloud-Player Desktop
+## aux.app Desktop
 You are looking for the macOS/Windows desktop app for YouTube, SoundCloud, Mixcloud or Deezer?
 Good news aux.app Desktop is the native desktop application that combines all the services in one app. Play YouTube,
 SoundCloud, Mixcloud and Deezer tracks and control the player with your keyboard (play/pause, next track, previous track).
