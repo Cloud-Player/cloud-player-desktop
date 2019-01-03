@@ -1,4 +1,5 @@
 const app = require('electron').remote.app;
+const {ipcRenderer} = require('electron');
 
 process.once('loaded', function () {
   window.addEventListener('load', function () {
@@ -9,5 +10,15 @@ process.once('loaded', function () {
       }
     });
     window.dispatchEvent(startNativeClientEvent);
+  });
+
+  ipcRenderer.on('prepare-close', () => {
+    if (!window.prepareClose) {
+      ipcRenderer.send('can-close');
+    } else {
+      window.prepareClose().then(() => {
+        ipcRenderer.send('can-close');
+      });
+    }
   });
 });

@@ -43,8 +43,30 @@ app.on('ready', function () {
   });
 });
 
-app.on('before-quit', function () {
-  windowManager.getOpenedWindows().forEach(function (window) {
-    window.trigger('before-quit');
-  });
+let canClose = false;
+ipc.on('can-close', () => {
+  console.log('got permission to close app');
+  canClose = true;
+  app.quit();
+});
+
+app.on('before-quit', function (ev) {
+  const activeWindow = windowManager.getActiveWindow();
+  if (!activeWindow) {
+    return;
+  }
+  if (!canClose) {
+    console.log('before-quit prepare close');
+    activeWindow.window.webContents.send('prepare-close');
+    ev.preventDefault();
+  } else {
+    console.log('before-quite propagate close');
+    activeWindow.trigger('before-quit');
+  }
+});
+
+app.on('will-quit', () => {
+  console.log('WILL QUIT');
+  // Unregister all shortcuts.
+  globalShortcut.unregisterAll();
 });
