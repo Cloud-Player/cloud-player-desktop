@@ -1,3 +1,7 @@
+# v2.0.1
+- Do not show devtools on startup
+- Let app execute teardown logic before closing app
+
 # v2.0.0
 - Update dependencies
 - Rebrand to aux.app

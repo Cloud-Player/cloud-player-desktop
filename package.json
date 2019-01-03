@@ -1,6 +1,6 @@
 {
   "name": "aux-app-native",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Native aux.app player to play music from YouTube, SoundCloud, MixCloud, Deezer,...",
   "main": "./src/main.js",
   "private": true,
