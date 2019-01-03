@@ -5,7 +5,7 @@ const app = electron.app;  // Module to control application life. // Module to c
 const ipc = electron.ipcMain;
 
 const windowManager = require('./windows/window_manager');
-const CloudPlayerWindow = require('./windows/aux-app/aux-app');
+const AuxAppWindow = require('./windows/aux-app/aux-app');
 const nativeMenu = require('./native_menu');
 const globalShortcut = require('electron').globalShortcut;
 
@@ -28,7 +28,7 @@ app.on('activate', function () {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 app.on('ready', function () {
-  windowManager.registerWindow(new CloudPlayerWindow());
+  windowManager.registerWindow(new AuxAppWindow());
 
   windowManager.getWindowById('portal').open();
 
