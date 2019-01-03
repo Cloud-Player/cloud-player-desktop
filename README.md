@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/auxdotapp/desktop-app.svg?branch=master)](https://travis-ci.org/auxdotapp/desktop-app)
 
 # aux.app
-[![Cloud Player Teaser](https://aux.app/assets/desktop-app/osx-screenshot.png)](https://aux.app)
+[![Cloud Player Teaser](https://aux.app/assets/desktop-app/osx-screenshot.jpg)](https://aux.app)
 
 ## aux.app Desktop
 You are looking for the macOS/Windows desktop app for YouTube, SoundCloud, Mixcloud or Deezer?
