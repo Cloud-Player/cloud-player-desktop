@@ -9,7 +9,7 @@ const session = require('electron').session;
 const Q = require('q');
 
 var PortalWindow = Window.extend({
-  showDevTools: true,
+  showDevTools: false,
   url: 'https://aux.app',
   id: 'portal',
   hideWindowOnClose: true,
